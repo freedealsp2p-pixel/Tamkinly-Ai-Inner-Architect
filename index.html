@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tamkinly</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+    <script>
+      tailwind.config = {
+        important: '#tamkinly-root', // Scopes all Tailwind utility classes to the app container to avoid WP theme conflicts
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: ['Inter', 'sans-serif'],
+            },
+            colors: {
+              tamkin: {
+                void: '#05020a',   // The darkest black-purple from the image corners
+                cosmic: '#1a0b2e', // Deep purple background
+                core: '#2e1065',   // Rich violet
+                light: '#a855f7',  // Bright purple highlight
+                star: '#e9d5ff',   // Almost white purple for text/stars
+              }
+            },
+            animation: {
+              'deep-breath': 'deepBreath 24s ease-in-out infinite', // Idle state: 24s cycle
+              'void-shimmer': 'voidShimmer 4s ease-in-out infinite', // Thinking state: Slow wave
+              'gentle-rise': 'gentleRise 0.6s cubic-bezier(0.2, 0.8, 0.2, 1) forwards', // Response delivery
+              'listening-pulse': 'listeningPulse 4s ease-in-out infinite', // Typing state
+              'spin-slow': 'spin 15s linear infinite',
+            },
+            keyframes: {
+              deepBreath: {
+                '0%, 100%': { opacity: '0.6', transform: 'scale(1)' },
+                '50%': { opacity: '0.85', transform: 'scale(1.02)' }, // Extremely subtle expansion
+              },
+              voidShimmer: {
+                '0%': { backgroundPosition: '200% 0' },
+                '100%': { backgroundPosition: '-200% 0' },
+              },
+              gentleRise: {
+                '0%': { opacity: '0', transform: 'translateY(8px)' },
+                '100%': { opacity: '1', transform: 'translateY(0)' },
+              },
+              listeningPulse: {
+                '0%, 100%': { borderColor: 'rgba(139, 92, 246, 0.3)' },
+                '50%': { borderColor: 'rgba(168, 85, 247, 0.5)' },
+              }
+            }
+          }
+        }
+      }
+    </script>
+    <style>
+      /* Reset for the app container only */
+      #tamkinly-root {
+        background-color: #05020a;
+        color: #e9d5ff;
+        font-family: 'Inter', sans-serif;
+        overflow: hidden;
+        /* Deep Radial Gradient simulating the cosmic void in the image */
+        background: radial-gradient(circle at 50% 110%, #4c1d95, #1e1b4b 40%, #05020a 80%);
+        
+        /* Positioning for overlay/embed */
+        position: fixed;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 99999; /* Ensure it sits above WP admin bar and theme headers */
+      }
+      
+      /* Custom scrollbar scoped to app */
+      #tamkinly-root ::-webkit-scrollbar {
+        width: 4px;
+      }
+      #tamkinly-root ::-webkit-scrollbar-track {
+        background: rgba(0, 0, 0, 0.2);
+      }
+      #tamkinly-root ::-webkit-scrollbar-thumb {
+        background: rgba(168, 85, 247, 0.3);
+        border-radius: 10px;
+      }
+      
+      /* Glassmorphism utilities */
+      #tamkinly-root .glass-panel {
+        background: rgba(15, 5, 24, 0.7);
+        backdrop-filter: blur(16px);
+        -webkit-backdrop-filter: blur(16px);
+        border-left: 1px solid rgba(168, 85, 247, 0.15);
+      }
+      
+      /* Agent Message - Crystal Facet Aesthetic */
+      #tamkinly-root .tamkinly-agent-message {
+        /* Subtle gradient like light hitting a crystal surface */
+        background: linear-gradient(135deg, rgba(46, 16, 101, 0.4), rgba(88, 28, 135, 0.15));
+        border: 1px solid rgba(139, 92, 246, 0.2);
+        padding: 24px;
+        border-radius: 18px;
+        border-top-left-radius: 4px; /* Faceted corner */
+        color: #e9d5ff;
+        font-weight: 300;
+        line-height: 1.8;
+        box-shadow: 0 4px 30px rgba(0,0,0,0.2);
+        position: relative;
+        overflow: hidden;
+      }
+      
+      /* Subtle inner shimmer for the message */
+      #tamkinly-root .tamkinly-agent-message::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 1px;
+        background: linear-gradient(90deg, transparent, rgba(192, 132, 252, 0.4), transparent);
+      }
+      
+      #tamkinly-root .tamkinly-user-message {
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid rgba(255, 255, 255, 0.05);
+        padding: 20px;
+        border-radius: 18px;
+        border-bottom-right-radius: 4px;
+        color: #f3f4f6;
+      }
+
+      /* Input area - Dark and contained */
+      #tamkinly-root .tamkinly-agent-input {
+        background: rgba(10, 5, 20, 0.6);
+        border: 1px solid rgba(139, 92, 246, 0.2);
+        border-radius: 16px;
+        padding: 16px 24px;
+        color: #e9d5ff;
+        width: 100%;
+        transition: all 0.5s ease-out; /* Smoother transition for breathing effect */
+        font-weight: 300;
+        letter-spacing: 0.02em;
+        backdrop-filter: blur(5px);
+      }
+
+      #tamkinly-root .tamkinly-agent-input:focus {
+        outline: none;
+        background: rgba(20, 10, 40, 0.8);
+        /* Focus styles handled via utility classes for animation */
+      }
+      
+      #tamkinly-root .tamkinly-agent-input::placeholder {
+        color: rgba(168, 85, 247, 0.3);
+        transition: color 0.3s ease;
+      }
+
+      #tamkinly-root .tamkinly-agent-input:focus::placeholder {
+        color: rgba(168, 85, 247, 0.5);
+      }
+    </style>
+    <script type="importmap">
+    {
+      "imports": {
+        "@google/genai": "https://esm.sh/@google/genai@^1.41.0",
+        "react/": "https://esm.sh/react@^19.2.4/",
+        "react": "https://esm.sh/react@^19.2.4",
+        "react-dom/": "https://esm.sh/react-dom@^19.2.4/"
+      }
+    }
+    </script>
+  <link rel="stylesheet" href="/index.css">
+</head>
+  <body>
+    <!-- Unique ID to prevent conflict with WordPress root elements -->
+    <div id="tamkinly-root"></div>
+  <script type="module" src="/index.tsx"></script>
+</body>
+</html>
